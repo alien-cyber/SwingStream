@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/idRLContainer"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <!-- ExoPlayer View -->
+    <com.google.android.exoplayer2.ui.PlayerView
+        android:id="@+id/liveexoView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:background="@android:color/black"
+        android:keepScreenOn="true"
+        app:show_buffering="when_playing" />
+
+    <!-- Controller Layout -->
+    <LinearLayout
+        android:id="@+id/controllerLayout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:background="#74FFFFFF"
+        android:gravity="end"
+        android:padding="8dp">
+
+        <!-- Fullscreen Button -->
+        <ImageButton
+            android:id="@+id/fullScreenButton"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="end"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="@string/full_screen"
+            android:scaleType="centerInside"
+            android:src="@drawable/ic_fullscreen_exit" />
+    </LinearLayout>
+
+</RelativeLayout>

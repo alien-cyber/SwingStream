@@ -1,0 +1,16 @@
+<resources>
+
+
+    <string name="server_address">192.168.1.38</string>
+
+
+
+
+    <string name="app_name">Playtube</string>
+    <string name="play_pause"> play_pause</string>
+    <string name="rewind">rewind</string>
+    <string name="forward">forward</string>
+    <string name="full_screen">full_screen</string>
+    <string name="logo">logo</string>
+    <string name="logout">logout</string>
+</resources>
