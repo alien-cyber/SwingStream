@@ -28,7 +28,7 @@
         android:id="@+id/emailInput"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:hint="Email"
+        android:hint="Email(Format-abc@mail.com)"
         android:inputType="textEmailAddress"
         android:padding="12dp"
         android:backgroundTint="@color/purple_500"

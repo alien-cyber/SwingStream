@@ -6,8 +6,10 @@
 
 
 
-    <string name="app_name">Playtube</string>
+    <string name="app_name">SwingStream</string>
     <string name="play_pause"> play_pause</string>
+    <string name="loading">Loading..</string>
+
     <string name="rewind">rewind</string>
     <string name="forward">forward</string>
     <string name="full_screen">full_screen</string>

@@ -22,6 +22,16 @@
             app:layout_scrollFlags="scroll|enterAlways"
             style="@style/CustomToolbar">
 
+            <!-- Language Selection Spinner -->
+            <Spinner
+                android:id="@+id/language_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_gravity="start"
+                android:background="@drawable/spinner_bg"/>
+
+
             <ImageView
                 android:id="@+id/logoImageView"
                 android:layout_width="50dp"
@@ -70,16 +80,21 @@
         android:background="@drawable/recycle_view"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:padding="16dp" />
-    <ProgressBar
-        android:id="@+id/loadingProgressBar"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="100dp"
-        android:indeterminateTint="@color/purple_500"
-        android:indeterminateTintMode="src_in"
+    <!-- Loading TextView at the bottom -->
+    <TextView
+        android:id="@+id/loadingTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:text="@string/loading"
+        android:textSize="18sp"
+        android:textColor="@color/logoutButtonBackground"
         android:visibility="gone"
-         style="@style/Widget.AppCompat.ProgressBar" />
+        android:padding="8dp"
+        android:gravity="center"
+
+        style="@style/TextAppearance.AppCompat.Medium"/>
 
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

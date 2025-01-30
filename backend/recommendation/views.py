@@ -6,6 +6,25 @@ from django.views.decorators.csrf import csrf_exempt
 import random
 from collections import defaultdict
 
+from google.cloud import translate
+
+
+PROJECT_ID = "gemini-449109"
+
+PARENT = f"projects/{PROJECT_ID}"
+
+def translate_text(text: str, target_language_code: str) -> translate.Translation:
+    client = translate.TranslationServiceClient()
+
+    response = client.translate_text(
+        parent=PARENT,
+        contents=[text],
+        target_language_code=target_language_code,
+    )
+
+    return response.translations[0]
+    
+
 players = [
     
     "Hank Aaron",
@@ -53,6 +72,8 @@ def homerun_urls(request):
     if request.method == 'POST':
         # Extract the search query from the POST data
         search_description = request.POST.get('query', '')
+        lang = request.POST.get('lang', 'en')
+
         top_n = int(request.POST.get('top_n', 3))
 
         # Add random items to the search query for variety
@@ -100,6 +121,10 @@ def homerun_urls(request):
                         "url": metadata[idx]["url"],
                     })
                     added_urls.add(metadata[idx]["url"])
+        if lang!='en':
+            
+            for match in top_matches:
+                match["description"]=translate_text(match["description"],lang).translated_text
 
         # Send the top matches as a JSON response
         return JsonResponse({'query': search_description, 'top_matches': top_matches})

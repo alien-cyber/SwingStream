@@ -13,8 +13,12 @@ import com.google.android.exoplayer2.PlaybackException
 import com.google.android.exoplayer2.Player
 import android.media.MediaMetadataRetriever
 import android.graphics.Bitmap
+import android.widget.AdapterView
+import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.ProgressBar
+import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import okhttp3.*
 import org.json.JSONObject
@@ -96,7 +100,7 @@ class MainActivity : AppCompatActivity() {
 
 
         val recyclerView = findViewById<RecyclerView>(R.id.videoList)
-        val progressBar = findViewById<ProgressBar>(R.id.loadingProgressBar)
+        val progressBar = findViewById<TextView>(R.id.loadingTextView)
 
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
@@ -115,8 +119,58 @@ class MainActivity : AppCompatActivity() {
                     loadVideoData()
 
                 }
+
             }
         })
+
+
+        val logoutTexts = mapOf(
+            "English" to "Logout",
+            "हिन्दी" to "लॉग आउट",
+            "Español" to "Cerrar sesión",
+            "Française" to "Se déconnecter",
+            "Deutsch" to "Abmelden",
+            "日本語" to "ログアウト"
+        )
+
+        val languageCodes = mapOf(
+            "English" to "en",
+            "हिन्दी" to "hi",
+            "Español" to "es",
+            "Française" to "fr",
+            "Deutsch" to "de",
+            "日本語" to "ja"
+        )
+        val languageSpinner: Spinner = findViewById(R.id.language_spinner)
+        val languages = arrayOf("English","日本語", "हिन्दी", "Español", "Française", "Deutsch",)
+        val langadapter = ArrayAdapter(this, R.layout.custom_spinner_item, languages)
+        langadapter.setDropDownViewResource(R.layout.custom_spinner_item)
+
+        languageSpinner.adapter = langadapter
+
+        languageSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>, view: View?, position: Int, id: Long) {
+                val selectedLanguage = languages[position]
+                val selectedLanguageCode = languageCodes[selectedLanguage]
+                val logoutText = logoutTexts[selectedLanguage] ?: "logout"
+
+                logout.text=logoutText
+
+                sharedPreferences.edit().putString("lang", selectedLanguageCode).apply()
+
+
+
+                counter = 0
+                videoList.clear()
+                adapter.notifyDataSetChanged()  // Notify the adapter about data change
+
+                progressBar.visibility = View.VISIBLE  // Show progress bar
+                loadVideoData()  // Load data based on new language
+
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>) {}
+        }
 
     }
 
@@ -131,7 +185,7 @@ class MainActivity : AppCompatActivity() {
         livePlayerView.useController = false // Disable player controls (optional)
 
         // Create a MediaItem for the live video
-        val liveVideoUrl = "http://$serverAddress:8000/api/video/1/" // Replace with your live video URL
+        val liveVideoUrl = "http://$serverAddress:8000/api/video/3/" // Replace with your live video URL
         val mediaItem = MediaItem.fromUri(liveVideoUrl)
 
         // Set the MediaItem to ExoPlayer
@@ -140,7 +194,7 @@ class MainActivity : AppCompatActivity() {
         // Mute the live video by default
         exoPlayer.volume = 0f
 
-        exoPlayer.seekTo(759000)
+        exoPlayer.seekTo(0)
 
         // Add a listener for playback state changes
         exoPlayer.addListener(object : Player.Listener {
@@ -174,7 +228,7 @@ class MainActivity : AppCompatActivity() {
         livePlayerView.setOnClickListener {
             val currentPosition: Long = exoPlayer.getCurrentPosition()
             val intent = Intent(this, FullscreenVideoActivity::class.java)
-            val liveVideoUrl = "http://$serverAddress:8000/api/video/1/" // Live video URL from server
+            val liveVideoUrl = "http://$serverAddress:8000/api/video/3/" // Live video URL from server
           // Optional thumbnail URL
 
             // Pass the live video URL and thumbnail URL to the new activity
@@ -220,11 +274,15 @@ class MainActivity : AppCompatActivity() {
         // Retrieve preferences from SharedPreferences
         val preferences = sharedPreferences.getString("preferences", "")
 
+        val LanguageCode =  sharedPreferences.getString("lang","en")
+        Log.d("lang","$LanguageCode")
 // Build the form body and include preferences in the query
         val formBody = FormBody.Builder()
-            .add("query", "your search description") // Replace with the actual query
-            .add("preferences", preferences ?: "")  // Add preferences from SharedPreferences
+
+            .add("query", preferences ?: "")  // Add preferences from SharedPreferences
             .add("top_n", "3") // Number of top matches to retrieve
+            .add("lang", LanguageCode?:"en")
+
             .build()
 
 
@@ -269,7 +327,7 @@ class MainActivity : AppCompatActivity() {
                             }
                             runOnUiThread {
                                 adapter.notifyDataSetChanged()
-                                val progressBar = findViewById<ProgressBar>(R.id.loadingProgressBar)
+                                val progressBar = findViewById<TextView>(R.id.loadingTextView)
                                 videoRecyclerView.adapter?.let { adapter ->
                                     if (adapter.itemCount > 0) {
                                         videoRecyclerView.scrollToPosition(adapter.itemCount - 2)

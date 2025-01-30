@@ -4,13 +4,22 @@ import aiohttp  # For making asynchronous HTTP requests
 from channels.generic.websocket import AsyncWebsocketConsumer
 from . import data_processor
 import random
+from google.cloud import translate
 
 
+PROJECT_ID = "gemini-449109"
+
+PARENT = f"projects/{PROJECT_ID}"
 
 
 
 class UpdateConsumer(AsyncWebsocketConsumer):
+    global langcode
     async def connect(self):
+
+        headers = dict((k.decode(), v.decode()) for k, v in self.scope["headers"])
+        
+        self.langcode = headers.get("lang", "en")
         self.group_name = "updates_group"
         await self.channel_layer.group_add(self.group_name, self.channel_name)
         await self.accept()
@@ -47,7 +56,10 @@ class UpdateConsumer(AsyncWebsocketConsumer):
                             if next_event:
                                 events = ["strike", "strikeout", "homerun", "walk", "single", "double", "triple", "hit by pitch", "ground out", "fly out"]
                                 selected_events = random.sample(events, 3)
-                            
+                                next_event=translate_text(next_event,self.langcode)
+                                description=translate_text(description, self.langcode)
+                                selected_events = [translate_text(event, self.langcode) for event in selected_events]
+
 
 
 
@@ -72,5 +84,18 @@ class UpdateConsumer(AsyncWebsocketConsumer):
             # Wait for 1 minute before the next fetch
             await asyncio.sleep(10)
 
+
+
+
+def translate_text(text: str, target_language_code: str) -> translate.Translation:
+    client = translate.TranslationServiceClient()
+
+    response = client.translate_text(
+        parent=PARENT,
+        contents=[text],
+        target_language_code=target_language_code,
+    )
+
+    return response.translations[0].translated_text
 
 

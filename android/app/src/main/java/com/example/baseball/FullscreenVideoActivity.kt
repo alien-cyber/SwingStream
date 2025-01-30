@@ -2,7 +2,7 @@ package com.example.baseball
 
 
 
-import android.content.Intent
+import android.util.Log
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 
@@ -138,9 +138,15 @@ class FullscreenVideoActivity : AppCompatActivity() {
 
 
     private fun connectWebSocket(laptopIp: String) {
+
+        val sharedPreferences = getSharedPreferences("BaseballAppPrefs", MODE_PRIVATE)
+
+        // Retrieve preferences from SharedPreferences
+        val langcode = sharedPreferences.getString("lang", "en")
         val client = OkHttpClient()
         val request = Request.Builder()
             .url("ws://$laptopIp:8001/ws/updates/")
+            .addHeader("lang", langcode?:"en")
             .build()
 
         webSocket = client.newWebSocket(request, object : WebSocketListener() {
@@ -162,8 +168,11 @@ class FullscreenVideoActivity : AppCompatActivity() {
                         val selectedEvents = message.getJSONArray("selected_events")
                         val selectedEventsList = mutableListOf<String>()
                         for (i in 0 until selectedEvents.length()) {
-                            selectedEventsList.add(selectedEvents.getString(i))
+                            val event = selectedEvents.getString(i)
+                            selectedEventsList.add(event)
+                            Log.d("SelectedEvent", "Event $i: $event")
                         }
+
 
                         val dialog = OptionsDialogFragment.newInstance(selectedEventsList,description,nextEvent)
                         dialog.show(supportFragmentManager, "OptionsDialog")

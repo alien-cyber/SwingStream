@@ -1,6 +1,6 @@
 
 import aiohttp 
-import google.generativeai as genai 
+
 import typing_extensions as typing
 import json
 import vertexai
@@ -22,7 +22,7 @@ async def process_data(data, timestamp, prevtime):
     Process the fetched data and determine what to send.
     Returns None if no update is needed; otherwise, returns the processed message.
     """
-    
+    print(timestamp," ",prevtime)
     curtime = data["metaData"]["timeStamp"]
 
     if curtime != prevtime:
@@ -114,7 +114,7 @@ Give the answer in json form ,it should contain next_event which is form this li
   ]} and description in 5-6 words"""
             prompt=prompt_1+prompt_2
 
-            model = GenerativeModel("gemini-1.5-flash-002")
+            model = GenerativeModel("gemini-1.5-flash-001")
             model_result = model.generate_content(
                            prompt
                             )
@@ -129,8 +129,10 @@ Give the answer in json form ,it should contain next_event which is form this li
                 description = parsed_data['description']
 
             else:
-                return "Hello bro","what will happen next",timestamp,prevtime   
+                return "Hello","what will happen next",timestamp,prevtime   
             
+            
+
             
             return next_event,description, timestamp, prevtime
             
@@ -171,7 +173,7 @@ def increment_timestamp(timestamp):
     second = int(time_part[4:])
 
     # Increment the seconds
-    second += 10
+    second += 17
 
     # Handle overflow using datetime
     try:
@@ -184,5 +186,9 @@ def increment_timestamp(timestamp):
     return dt.strftime("%Y%m%d_%H%M%S")
 
 
+
+
+
    
 
+    
