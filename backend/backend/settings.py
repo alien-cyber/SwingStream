@@ -44,6 +44,7 @@ INSTALLED_APPS = [
      'authentication',
      'recommendation',
      'rest_framework',
+    'daphne',
 ]
 CHANNEL_LAYERS = {
     'default': {
