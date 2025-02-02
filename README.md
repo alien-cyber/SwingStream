@@ -3,18 +3,20 @@
 ## Description
 A streaming app for baseball fans along with some extra Ai features(see images)
 
+![Alt text](images/screenshot.jpeg)
+
 ## Features
-- 
-- Feature 2
-- Feature 3
+- Multiple languages
+- AI-Fan interaction about next event
+- Content-based filtering and telecasting Homerun videos
 
 ## Installation
 ```sh
 # Clone the repository
-git clone https://github.com/yourusername/yourproject.git
+git clone https://github.com/alien-cyber/SwingStream.git
 
 # Navigate to the project directory
-cd yourproject
+cd backend
 
 # Install dependencies
 npm install  # or pip install -r requirements.txt
