@@ -7,7 +7,7 @@ import random
 from google.cloud import translate
 
 
-PROJECT_ID = "gemini-449109"
+PROJECT_ID = "Your-project-ID"
 
 PARENT = f"projects/{PROJECT_ID}"
 
