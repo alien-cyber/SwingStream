@@ -5,6 +5,9 @@ A streaming app for baseball fans along with some extra Ai features(see images)
 
 ![Alt text](images/screenshot.jpeg)
 
+[Watch the Demo ](https://www.youtube.com/watch?v=r6EG5Z9dVsc&ab_channel=Nanthakumar)
+
+
 ## Features
 - Multiple languages
 - AI-Fan interaction about next event
@@ -33,15 +36,10 @@ daphne -b 0.0.0.0 -p 8080 backend.asgi:application
 
 ```
 
-## Contributing
-1. Fork the repository
-2. Create a new branch (`git checkout -b feature-branch`)
-3. Commit your changes (`git commit -m 'Add new feature'`)
-4. Push to the branch (`git push origin feature-branch`)
-5. Create a Pull Request
+
+
 
 ## License
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the Apache License Version 2.0.
 
-## Contact
-For any issues or suggestions, contact [your-email@example.com](mailto:your-email@example.com).
+
