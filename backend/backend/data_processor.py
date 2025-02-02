@@ -8,7 +8,7 @@ from vertexai.generative_models import GenerativeModel
 
 
 
-vertexai.init(project="gemini-449109", location="us-central1")
+vertexai.init(project="Your-project_ID", location="us-central1")
 
 class Prediction(typing.TypedDict):
     description: str
