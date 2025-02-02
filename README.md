@@ -12,20 +12,25 @@ A streaming app for baseball fans along with some extra Ai features(see images)
 
 ## Installation
 ```sh
-# Clone the repository
+
 git clone https://github.com/alien-cyber/SwingStream.git
 
-# Navigate to the project directory
 cd backend
 
-# Install dependencies
-npm install  # or pip install -r requirements.txt
+pip install -r requirements.txt
+
+python manage.py makemigrations
+
+python manage.py migrate
+
+
 ```
 
-## Usage
+## Make sure to login with gcloud auth and replace ID with your project ID in cloud 
 ```sh
-# Run the project
-npm start  # or python main.py
+
+daphne -b 0.0.0.0 -p 8080 backend.asgi:application
+
 ```
 
 ## Contributing
