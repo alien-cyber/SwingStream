@@ -3,9 +3,12 @@
 ## Description
 A streaming app for baseball fans along with some extra Ai features(see images)
 
+[Watch the Demo ](https://www.youtube.com/watch?v=r6EG5Z9dVsc&ab_channel=Nanthakumar)
+
+
 ![Alt text](images/screenshot.jpeg)
 
-[Watch the Demo ](https://www.youtube.com/watch?v=r6EG5Z9dVsc&ab_channel=Nanthakumar)
+
 
 
 ## Features
